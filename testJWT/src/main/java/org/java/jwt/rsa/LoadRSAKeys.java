@@ -25,7 +25,7 @@ public class LoadRSAKeys {
     }
 
     // Metoda do wczytania klucza prywatnego z pliku PEM
-    private static PrivateKey loadPrivateKey(String filePath) throws Exception {
+    public static PrivateKey loadPrivateKey(String filePath) throws Exception {
         String keyPEM = new String(Files.readAllBytes(new File(filePath).toPath()));
         String privateKeyPEM = keyPEM.replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
@@ -38,7 +38,7 @@ public class LoadRSAKeys {
     }
 
     // Metoda do wczytania klucza publicznego z pliku PEM
-    private static PublicKey loadPublicKey(String filePath) throws Exception {
+    public static PublicKey loadPublicKey(String filePath) throws Exception {
         String keyPEM = new String(Files.readAllBytes(new File(filePath).toPath()));
         String publicKeyPEM = keyPEM.replace("-----BEGIN PUBLIC KEY-----", "")
                 .replace("-----END PUBLIC KEY-----", "")
