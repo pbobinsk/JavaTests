@@ -24,3 +24,9 @@ hs_err_pid*
 replay_pid*
 /.idea/vcs.xml
 /.idea/.gitignore
+/.idea/modules.xml
+/.idea/compiler.xml
+/.idea/encodings.xml
+/.idea/jarRepositories.xml
+/.idea/JavaTests.iml
+/.idea/misc.xml

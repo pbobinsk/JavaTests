@@ -1,4 +1,4 @@
-package wsb.spi;
+package org.java.rpc.json;
 
 
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;

@@ -1,4 +1,4 @@
-package org.example;
+package org.java.jwt;
 
 import io.jsonwebtoken.*;
 
@@ -11,7 +11,7 @@ public class JwtVerifier {
     public static void verifyJwt(String jwtToken) {
         try {
             // Weryfikacja tokena
-            Jws<Claims> claimsJws = Jwts.parserBuilder()
+            Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(SECRET_KEY.getBytes()) // Podaj klucz
                     .build()
                     .parseClaimsJws(jwtToken);

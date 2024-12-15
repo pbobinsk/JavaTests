@@ -1,4 +1,4 @@
-package org.example;
+package org.java.jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
