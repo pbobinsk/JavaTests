@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="/style.css"/>
+<h1>User List</h1>
+<a th:href="@{/users/new}">➕ Add User</a>
+<table>
+    <tr><th>Name</th><th>Email</th><th>Actions</th></tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td>
+            <a th:href="@{'/users/edit/' + ${user.id}}">✏️</a>
+            <a th:href="@{'/users/delete/' + ${user.id}}">🗑️</a>
+        </td>
+    </tr>
+</table>
