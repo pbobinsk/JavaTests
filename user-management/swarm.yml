@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  user-management-app:
+    image: test-spring:latest   # <-- zakładam, że masz już zbudowany obraz!
+    ports:
+      - "8080:8080"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
