@@ -1,0 +1,88 @@
+@startuml
+' Diagram UML dla Systemu Zarządzania Urządzeniami w Inteligentnym Domu - Wersja Uproszczona
+
+' --- Klasy Główne ---
+
+class InteligentnyDom {
+  + nazwaDomu : String
+  + dodajUrzadzenie(Urzadzenie)
+  + wyswietlStatusWszystkichUrzadzen()
+  + wlaczWszystkiePrzelaczalne() ' Przykład polimorfizmu przez interfejs
+}
+
+abstract class Urzadzenie {
+  # idUrzadzenia : String
+  # nazwaPrzyjazna : String
+  # status : StatusUrzadzenia ' Enum
+  + pobierzStatus() : StatusUrzadzenia
+  + {abstract} pobierzSzczegolowyOpis() : String
+}
+
+enum StatusUrzadzenia {
+  WLACZONE
+  WYLACZONE
+  AWARIA
+  NIEZNANY
+}
+
+' --- Dziedziczenie Urządzeń ---
+
+class Lampa extends Urzadzenie {
+  - poziomJasnosci : int
+  + pobierzSzczegolowyOpis() : String ' Nadpisanie
+}
+
+class Termostat extends Urzadzenie {
+  - temperaturaDocelowa : double
+  + pobierzSzczegolowyOpis() : String ' Nadpisanie
+}
+
+class CzujnikRuchu extends Urzadzenie {
+  - czyWykrytoRuch : boolean
+  + pobierzSzczegolowyOpis() : String ' Nadpisanie
+}
+
+' --- Interfejsy (Zdolności) ---
+
+interface IPrzelaczalne {
+  + {abstract} wlacz()
+  + {abstract} wylacz()
+}
+
+interface IRegulowalne {
+  + {abstract} ustawPoziom(int) ' lub ustawWartosc(double)
+}
+
+interface IRaportujace {
+  + {abstract} pobierzOstatnieZdarzenie() : String ' lub podobne
+}
+
+' --- Relacje ---
+
+' InteligentnyDom zawiera wiele Urządzeń (Agregacja)
+InteligentnyDom o-- "*" Urzadzenie
+
+' Urzadzenie ma StatusUrzadzenia (Asocjacja)
+Urzadzenie --> StatusUrzadzenia
+
+' Implementacja interfejsów przez konkretne urządzenia
+IPrzelaczalne <|.. Lampa
+IPrzelaczalne <|.. Termostat
+IRegulowalne <|.. Termostat
+IRaportujace <|.. CzujnikRuchu
+
+' --- Uwagi dla Studentów ---
+note right of InteligentnyDom
+  **Zadanie dla studenta:**
+  1. Uzupełnij klasy o brakujące atrybuty
+     (np. `lokalizacja` w `Urzadzenie`, `aktualnaTemperatura` w `Termostat`).
+  2. Dodaj niezbędne konstruktory i metody dostępowe (gettery/settery),
+     pamiętając o enkapsulacji (prywatne pola!).
+  3. Doprecyzuj implementacje metod abstrakcyjnych i metod z interfejsów.
+  4. Dodaj metody zarządzające w `InteligentnyDom`
+     (np. `usunUrzadzenie`, `znajdzUrzadzenie`, `zarzadzajUrzadzeniem`).
+  5. Rozważ dodanie innych interfejsów lub klas urządzeń, jeśli czas pozwoli.
+  6. Zapewnij poprawną obsługę statusów w metodach `wlacz`/`wylacz`.
+end note
+
+@enduml

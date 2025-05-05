@@ -1,0 +1,92 @@
+@startuml
+' Diagram UML dla Systemu Zarządzania Flotą Pojazdów Miejskich - Wersja Uproszczona
+
+' --- Klasy Główne ---
+
+class SystemZarzadzaniaFlota {
+  + nazwaSystemu : String
+  + dodajPojazd(Pojazd)
+  + wyswietlStatusFloty()
+  + zlokalizujWszystkiePojazdy() ' Polimorfizm przez interfejs
+  + przeprowadzPrzegladSerwisowy() ' Polimorfizm przez interfejs
+}
+
+abstract class Pojazd {
+  # idRejestracyjny : String
+  # rokProdukcji : int
+  # aktualnyStatus : StatusPojazdu
+  + pobierzStatus() : StatusPojazdu
+  + aktualizujStatus(StatusPojazdu)
+  + {abstract} wyswietlSzczegoly() : String
+}
+
+enum StatusPojazdu {
+  OPERACYJNY
+  W_SERWISIE
+  AWARIA
+  POZA_UZYCIEM
+}
+
+' --- Dziedziczenie Pojazdów ---
+
+class Autobus extends Pojazd {
+  - numerLinii : String
+  - poziomPaliwa : double
+  + wyswietlSzczegoly() : String ' Nadpisanie
+}
+
+class Tramwaj extends Pojazd {
+  - numerLinii : String
+  - liczbaWagonow : int
+  + wyswietlSzczegoly() : String ' Nadpisanie
+}
+
+class HulajnogaElektryczna extends Pojazd {
+  - poziomNaladowaniaBaterii : int
+  + wyswietlSzczegoly() : String ' Nadpisanie
+}
+
+' --- Interfejsy (Zdolności/Wymagania) ---
+
+interface IMozliwyDoNamierzenia {
+  + {abstract} pobierzAktualnaLokalizacje() : String
+}
+
+interface IWymagajacySerwisu {
+  + {abstract} sprawdzStanTechniczny() : String ' lub boolean
+  + {abstract} zaplanujSerwis() : boolean
+}
+
+' --- Relacje ---
+
+' System zawiera wiele Pojazdów (Agregacja)
+SystemZarzadzaniaFlota o-- "*" Pojazd
+
+' Pojazd ma StatusPojazdu (Asocjacja)
+Pojazd --> StatusPojazdu
+
+' Implementacja interfejsów przez konkretne pojazdy
+IMozliwyDoNamierzenia <|.. Autobus
+IWymagajacySerwisu <|.. Autobus
+
+IMozliwyDoNamierzenia <|.. Tramwaj
+IWymagajacySerwisu <|.. Tramwaj
+
+IMozliwyDoNamierzenia <|.. HulajnogaElektryczna
+' IWymagajacySerwisu <|.. HulajnogaElektryczna ' Do decyzji studenta, czy też implementuje
+
+' --- Uwagi dla Studentów ---
+note right of SystemZarzadzaniaFlota
+  **Zadanie dla studenta:**
+  1. Uzupełnij klasy o brakujące atrybuty
+     (np. `lokalizacja` w `Pojazd`, `pojemnoscPasazerow` w `Autobus`).
+  2. Dodaj konstruktory i metody dostępowe (gettery/settery),
+     dbając o enkapsulację (prywatne pola!).
+  3. Zaimplementuj logikę metod abstrakcyjnych i metod z interfejsów.
+  4. Dodaj metody w `SystemZarzadzaniaFlota`
+     (np. `usunPojazd`, `znajdzPojazd`, `raportujPojazdyWSerwisie`).
+  5. Zdecyduj, które interfejsy powinna implementować `HulajnogaElektryczna`.
+  6. Zadbaj o poprawną logikę zmiany statusów i aktualizacji danych.
+end note
+
+@enduml

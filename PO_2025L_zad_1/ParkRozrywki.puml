@@ -1,0 +1,88 @@
+@startuml g
+' Diagram UML dla Systemu Zarządzania Parkiem Rozrywki - Wersja Uproszczona
+
+' --- Klasy Główne ---
+
+class ParkRozrywki {
+  + dodajAtrakcje(Atrakcja)
+  + symulujWejscieGoscia(Gosc, String)
+  + wyswietlStatusWszystkichAtrakcji()
+  + przeprowadzInspekcjeBezpieczenstwa()
+}
+
+abstract class Atrakcja {
+  # nazwa : String
+  # pojemnoscMaksymalna : int
+  # {abstract} czyMozeWejsc(Gosc) : boolean
+  + wejdz(int) : boolean
+  + wyjdz(int)
+  + pobierzStatus() : String
+}
+
+class Gosc {
+  + imie : String
+  + wiek : int
+  + wzrost : int
+}
+
+class Bilet {
+  + idBiletu : String
+  + typBiletu : TypBiletuEnum ' Można dodać Enum
+  + czyWazny : boolean
+}
+
+' --- Dziedziczenie Atrakcji ---
+
+class KolejkaGorska extends Atrakcja {
+  - minimalnyWzrost : int
+  + czyMozeWejsc(Gosc) : boolean ' Nadpisanie
+}
+
+class Karuzela extends Atrakcja {
+  - czyDlaDzieci : boolean
+  + czyMozeWejsc(Gosc) : boolean ' Nadpisanie
+}
+
+class Pokaz extends Atrakcja {
+  - godzinaRozpoczecia : String
+  + czyMozeWejsc(Gosc) : boolean ' Nadpisanie
+}
+
+' --- Interfejs ---
+
+interface IWymaganiaBezpieczenstwa {
+  + {abstract} sprawdzWymagania()
+}
+
+' --- Relacje ---
+
+' Park zawiera wiele Atrakcji (Agregacja)
+ParkRozrywki o-- "*" Atrakcja
+
+' Gosc ma jeden Bilet (Asocjacja/Kompozycja)
+Gosc --> "1" Bilet
+
+' KolejkaGorska implementuje IWymaganiaBezpieczenstwa
+IWymaganiaBezpieczenstwa <|.. KolejkaGorska
+
+' Atrakcja może potrzebować informacji o Gościu (Zależność/Asocjacja - do doprecyzowania)
+Atrakcja ..> Gosc : "sprawdza"
+
+' ParkRozrywki używa Gości (Zależność - do doprecyzowania)
+ParkRozrywki ..> Gosc : "symuluje wejście"
+
+
+' --- Uwagi dla Studentów (można je usunąć przed przekazaniem) ---
+note left of Atrakcja
+  **Zadanie dla studenta:**
+  1. Dodaj brakujące atrybuty (np. aktualnaLiczbaOsob)
+     i metody dostępowe (gettery/settery) zgodnie z zasadami enkapsulacji.
+  2. Uzupełnij/doprecyzuj relacje (np. czy Gosc powinien mieć listę Biletów?
+     Jak dokładnie ParkRozrywki zarządza Gośćmi?).
+  3. Zastanów się, które atrybuty powinny być prywatne/chronione/publiczne.
+  4. Dodaj implementację interfejsu IWymaganiaBezpieczenstwa
+     do innych klas, jeśli to zasadne.
+  5. Rozważ dodanie Enum dla TypBiletu.
+end note
+
+@enduml
