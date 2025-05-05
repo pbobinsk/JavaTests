@@ -81,13 +81,4 @@ Wyobraź sobie, że tworzysz oprogramowanie dla nowego parku rozrywki "Inżynier
 
 **Czas realizacji:** Maksymalnie 3 godziny.
 
----
-
-**Dlaczego ten temat jest dobry:**
-
-*   **Niestandardowy:** Odchodzi od typowych przykładów.
-*   **Relatywnie prosty do zrozumienia:** Koncept parku rozrywki jest powszechnie znany.
-*   **Dobrze mapuje się na OOP:** Naturalnie pojawiają się hierarchie (atrakcje), różne byty (goście, bilety, atrakcje), wspólne interfejsy (wymagania) i potrzeba polimorfizmu (zarządzanie różnymi atrakcjami w jednolity sposób).
-*   **Skalowalny:** Można łatwo dodać więcej typów atrakcji, biletów, czy wprowadzić personel, jeśli czas pozwoli lub jako zadanie dodatkowe.
-*   **Wymaga wszystkich kluczowych konceptów:** Zadanie wymusza użycie klas, obiektów, dziedziczenia, interfejsów, enkapsulacji i polimorfizmu w sensowny sposób.
-*   **Realistyczny czas:** Zakres zadania jest odpowiedni na około 3 godziny pracy dla studenta znającego podstawy OOP.
+-
