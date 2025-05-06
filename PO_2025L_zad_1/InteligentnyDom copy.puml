@@ -1,0 +1,51 @@
+@startuml
+
+class InteligentnyDom {
+  + nazwaDomu : String
+  + dodajUrzadzenie(Urzadzenie)
+  + wyswietlStatusWszystkichUrzadzen()
+  + wlaczWszystkiePrzelaczalne()
+}
+
+abstract class Urzadzenie {
+  # idUrzadzenia : String
+  # nazwaPrzyjazna : String
+  # status : StatusUrzadzenia
+  + pobierzStatus() : StatusUrzadzenia
+  + {abstract} pobierzSzczegolowyOpis() : String
+}
+
+class Lampa extends Urzadzenie {
+  - poziomJasnosci : int
+  + pobierzSzczegolowyOpis() : String
+}
+
+class Termostat extends Urzadzenie {
+  - temperaturaDocelowa : double
+  + pobierzSzczegolowyOpis() : String
+}
+
+class CzujnikRuchu extends Urzadzenie {
+  - czyWykrytoRuch : boolean
+  + pobierzSzczegolowyOpis() : String
+}
+
+
+interface IPrzelaczalne {
+  + {abstract} wlacz()
+  + {abstract} wylacz()
+}
+
+interface IRegulowalne {
+  + {abstract} ustawPoziom(int) ' lub ustawWartosc(double)
+}
+
+InteligentnyDom o-- "*" Urzadzenie
+
+Urzadzenie --> StatusUrzadzenia
+
+IPrzelaczalne <|.. Lampa
+IPrzelaczalne <|.. Termostat
+IRegulowalne <|.. Termostat
+
+@enduml
